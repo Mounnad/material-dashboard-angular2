@@ -1,0 +1,51 @@
+
+
+<div class="col-md-12">
+    <h3>Registration</h3>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h4 class="card-title">Register</h4>
+                <p class="card-category">Register you profile</p>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Email address" type="email" [formControl]="email">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="First Name" type="text" [formControl]="firstName">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-7">
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Last Name" type="text" [formControl]="lastName">
+                          </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Password" type="password" [formControl]="password">
+                          </mat-form-field>
+                        </div>
+                        <div class="col-md-7">
+                            <mat-form-field class="example-full-width">
+                              <input matInput placeholder="Confirm password" type="password" [formControl]="confirmPassword">
+                            </mat-form-field>
+                          </div>
+                    </div>
+                    <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="register()">Register</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'app/models/user';
+import { LocalStorageService } from 'app/services/local-storage.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'login',
@@ -16,24 +19,31 @@ export class LoginComponent implements OnInit {
   password = new FormControl();
   confirmPassword = new FormControl();
 
-  constructor(public httpClient : HttpClient) { }
+  constructor(public httpClient : HttpClient,
+              public localStorageService: LocalStorageService,
+              public router: Router
+    ) { }
 
   ngOnInit(): void {
+        //Check if token is exits
+
+        if(this.localStorageService.get('token')!= undefined)
+            this.router.navigateByUrl('');
   }
 
-  register()
+  login()
   {
+
     this.user = new User();
-    this.user.lastName = this.lastName.value;
-    this.user.firstName = this.firstName.value;
     this.user.email = this.email.value;
     this.user.password = this.password.value;
-    if(this.password.value == this.confirmPassword.value)
-    {
-      console.log("We are calling te api");
-       this.httpClient.post<User>('https://localhost:44346/api/Login/Register',this.user).subscribe();
-    }
-    console.log("Email :",this.email.value);
+
+    var token = this.httpClient.post<any>('https://localhost:44346/api/Login/Index',this.user)
+       .subscribe(result => {
+          this.localStorageService.set('token',result.tokenFinal)
+       });
+      
+    
   }
 
 }

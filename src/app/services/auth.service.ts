@@ -1,20 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'app/models/user';
+import { retry } from 'rxjs-compat/operator/retry';
+import { JWTTokenService } from './jwttoken.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  constructor(public jWTTokenService: JWTTokenService,
+    public httpClient: HttpClient,
+    public localStorageService: LocalStorageService
+    ) { }
 
-  url = 'https://localhost:44346/api/';
+  getJWTToken() {
+    let token = this.localStorageService.get('token');
+    this.jWTTokenService.setToken(token);
+    return token;
+  }
 
-  constructor(public httpClient: HttpClient) { }
+  signIncallBack() {
+      throw new Error('Method not implemented.');
+  }
+
+  UrlApi = 'https://localhost:44346/api/';
+
+
 
   createUser(user: User)
   {
-    this.httpClient.post<User>(this.url + 'Login/Register', user);
+    this.httpClient.post<User>(this.UrlApi + 'Login/Register', user);
   }
-
-
 }
